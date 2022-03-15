@@ -8,6 +8,8 @@
 import SwiftUI
 
 internal struct SACInsetModifier: ViewModifier {
+    @Environment(\.isPreview) var isPreview
+    
     @Environment(\.sacInsets) private var safeAreaInsets
     @Environment(\.sacInnerFrame) private var safeAreaFrame
     @Environment(\.sacOuterFrame) private var fullFrame
@@ -42,6 +44,8 @@ internal struct SACInsetModifier: ViewModifier {
     }
 
     private func calculatePadding(_ edge: Edge) -> CGFloat {
+        guard !isPreview else { return 0.0 }
+        
         let difference: CGFloat
         switch edge {
         case .leading:
